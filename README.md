@@ -6,6 +6,23 @@ This application contains
 1 Entity -- Employee.java
 1 Embedded value type included in this Entity -- Address.java
 
+@Embedded -- The dictionary meaning says "included". Where to mention this?
+
+Now, which is included  -- the embedded field is included
+     where it's included -- Inside the entity..
+
+So, simply mention on the top of that field. 
+
+@Embeddable --- The dictionart meaning, "includable". Where to mention this?
+
+Now which is includable --  the Address.java in this example
+    Where to mention -- Inside the embeddable class.
+
+@AttributeOverrides -- Annotation used to give the column names dynamically specific to each instance when a common embeddable type is being shared across multiple entities.
+
+To ignore a field from being part of the table... then @Transient annotation can be used.
+
+For eg: 
 @Transient is declared on the top of the city field in the Address.java file. Which will work as below :
 
 tells the JPA provider to exclude the attribute from database mapping entirely. This means that the city attribute won't be stored in the database, 
@@ -17,7 +34,6 @@ will not be converted into the column in the DB.
 The field can be used as similar to the other field. 
 
 In the code, i initialized the Address instance including the city field.
-
 
 Cons with @Transient:
 
@@ -37,7 +53,3 @@ in the Address class.
 
 The choice among these options depends on your specific application requirements and the flexibility you need in handling different sets of 
 attributes for the Address class across different entities.
-
-
-
-
