@@ -27,7 +27,12 @@ public class Student
 	private Long mobileNo;
 	
 	@Embedded
+	/*
+	 * No attributeOverride annotation used.. so the field name became the column name inside the Student entity.
+	 */
 	private Address address;
+	
+	
 	
 	/**
 	 * Default constructor.

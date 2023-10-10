@@ -26,13 +26,38 @@ public class Employee {
 	private String shiftType;
 	
 	@Embedded
-	@AttributeOverrides({@AttributeOverride(column = @Column(name = "emp_city"), name = "city"), 
-								  @AttributeOverride(column = @Column(name = "emp_state"), name = "state"),
-								  @AttributeOverride(column = @Column(name = "emp_pincode"), name = "pincode"),
-								  @AttributeOverride(column = @Column(name = "emp_addrLine1"), name = "addrLine1"),
-								  @AttributeOverride(column = @Column(name = "emp_addrLine2"), name = "addrLine2")})
-	private Address address;
+	@AttributeOverrides({@AttributeOverride(column = @Column(name = "employee_city"), name = "city"), 
+								  @AttributeOverride(column = @Column(name = "employee_state"), name = "state"),
+								  @AttributeOverride(column = @Column(name = "employee_pincode"), name = "pincode"),
+								  @AttributeOverride(column = @Column(name = "employee_addrLine1"), name = "addrLine1"),
+								  @AttributeOverride(column = @Column(name = "employee_addrLine2"), name = "addrLine2")})
+	private Address workLocationAddress;
 	
+	/*
+	 * Another instance of the Address component.. allowing hibernate to use the default names for the columns
+	 * Here the default names will be the same as the field names.
+	 * 
+	 * Note: Now the single table alone will contain all the columns(workLocationAdress columns + homeAdress columns + the curent class specifc columns)
+	 * 
+	 * This will be the sql stament genetated 
+	 * 
+	 *     create table employees (
+        employee_pincode integer,
+        employee_id integer not null auto_increment,
+        employee_addrLine1 varchar(255),
+        employee_addrLine2 varchar(255),
+        employee_state varchar(255),
+        employee_companyName varchar(255),
+        employee_shiftType varchar(255),
+        pincode integer not null,
+        addrLine1 varchar(255),
+        addrLine2 varchar(255),
+        state varchar(255),
+        primary key (employee_id)
+    ) engine=InnoDB
+	 * 
+	 */
+	private Address homeAddress;
 	
 	
 	public Employee() {
@@ -41,12 +66,21 @@ public class Employee {
 	
 	
 	
-	public Employee( String companyName, String shiftType, Address address) {
+	
+	
+	public Employee(String companyName, String shiftType, Address workLocationAddress, Address homeAddress) {
 		this.companyName = companyName;
 		this.shiftType = shiftType;
-		this.address = address;
+		this.workLocationAddress = workLocationAddress;
+		this.homeAddress = homeAddress;
 	}
-	
+
+	public Employee(String companyName, String shiftType, Address homeAddress) {
+		this.companyName = companyName;
+		this.shiftType = shiftType;
+		this.homeAddress = homeAddress;
+	}
+
 	public int getEmpId() {
 		return empId;
 	}
@@ -66,16 +100,26 @@ public class Employee {
 		this.shiftType = shiftType;
 	}
 
-
-
-	public Address getAddress() {
-		return address;
+	public Address getWorkLocationAddress() {
+		return workLocationAddress;
 	}
 
 
 
-	public void setAddress(Address address) {
-		this.address = address;
+	public void setWorkLocationAddress(Address workLocationAddress) {
+		this.workLocationAddress = workLocationAddress;
+	}
+
+
+
+	public Address getHomeAddress() {
+		return homeAddress;
+	}
+
+
+
+	public void setHomeAddress(Address homeAddress) {
+		this.homeAddress = homeAddress;
 	}
 	
 	
